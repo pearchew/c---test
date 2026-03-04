@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath> // C++ Math Library
+#include <iomanip> // "Input/Output Manipulation" for formatting currency
 
 
 // whatever is in the curly brackets of main gets executed when we run the program, the int next to it is the return type, which is an integer in this 
