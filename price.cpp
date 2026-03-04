@@ -22,6 +22,20 @@ double standardNormalCDF(double x) {
     return 0.5 * std::erfc(-x / std::sqrt(2.0));
 }
 
+// The Black-Scholes Math Engine
+double calculateCallPrice(double S, double K, double T, double r, double sigma) {
+    // 1. Calculate d1
+    double d1 = (std::log(S / K) + (r + 0.5 * std::pow(sigma, 2.0)) * T) / (sigma * std::sqrt(T));
+    
+    // 2. Calculate d2
+    double d2 = d1 - sigma * std::sqrt(T);
+
+    // 3. Calculate the Call Price
+    double callPrice = S * standardNormalCDF(d1) - K * std::exp(-r * T) * standardNormalCDF(d2);
+    
+    return callPrice;
+}
+
 int main() {
     // 1. Declare our financial variables using Strict Typing
     // This is Strict Typing in action. Unlike Python, C++ needs to know exactly how much computer memory to reserve for a variable. 
@@ -38,7 +52,8 @@ int main() {
     // This stands for "Character Output" from the "Standard" (std) library. It pushes the text inside the quotation marks to your screen. 
     // << std::endl just tells the program to hit "Enter" and start a new line after printing.
     std::cout << "Welcome to the High-Speed Options Pricer!" << std::endl;
-    std::cout << "Test: Normal CDF of 0 is: " << standardNormalCDF(0.0) << std::endl;
+    double optionPrice = calculateCallPrice(stockPrice, strikePrice, timeToMaturity, riskFreeRate, volatility);
+    std::cout << "The fair price of the European Call Option is: $" << optionPrice << std::endl;
 
     return 0;
 }
